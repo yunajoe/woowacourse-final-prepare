@@ -1,4 +1,5 @@
-import { Console } from '@woowacourse/mission-utils';
+import { MissionUtils } from '@woowacourse/mission-utils';
+import { printOutput } from './print-output.js';
 
 export const parseProductsData = data => {
   // /n은 과 \r\n은 줄바꿈(Linux&macOcs , windows)
@@ -26,16 +27,21 @@ export const parseProductsData = data => {
   return products;
 };
 
-export const printProducts = data => {
+export const groupingData = data => {
   const grouped = {};
-  const groupedResult = [];
-  data.forEach(p => {
-    const key = `${p.name}_${p.price}`;
-    if (!grouped[key]) {
-      grouped[key] = [];
+  data.forEach(item => {
+    if (!grouped[item.name]) {
+      grouped[item.name] = [];
     }
-    grouped[key].push(p);
+    grouped[item.name].push(item);
   });
+  return grouped;
+};
+
+export const printProducts = data => {
+  const groupedResult = [];
+  const grouped = groupingData(data);
+
   Object.values(grouped).forEach(items => {
     items.forEach(item => {
       const { name, price, quantity, promotion } = item;
@@ -50,13 +56,40 @@ export const printProducts = data => {
       groupedResult.push(line);
     });
   });
-  Console.print(groupedResult.join('\n'));
+  printOutput(groupedResult.join('\n'));
 };
 
-export const parseInputData = data => {
-  const [productName, productAmount] = data.replace('[', '').replace(']', '').split('-');
-  return {
-    productName,
-    productAmount,
-  };
+// promotion data
+export const parsePromotionData = data => {
+  const regex = /\n|\r\n/;
+  const result = data.trim().split(regex);
+  const [, ...rows] = result;
+  const promotionObject = {};
+  rows.forEach(item => {
+    const [key, buy, get, startDate, endDate] = item.split(',').map(item => item.trim());
+    promotionObject[key] = {
+      promotionName: key,
+      buy: Number(buy),
+      get: Number(get),
+      startDate,
+      endDate,
+    };
+  });
+  return promotionObject;
+};
+
+// export const returnToday = () => {
+//   const dateTime = MissionUtils.DateTimes.now();
+//   const formattedDate = new Date(dateTime);
+//   return {
+//     year: formattedDate.getFullYear(),
+//     month: formattedDate.getMonth() + 1,
+//     day: formattedDate.getDate(),
+//   };
+// };
+
+export const IsDateInPromotionDate = (startDate, endDate) => {
+  const dateTime = MissionUtils.DateTimes.now();
+  const today = new Date(dateTime);
+  return today >= new Date(startDate) && today <= new Date(endDate);
 };
