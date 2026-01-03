@@ -11,7 +11,7 @@ export const calculate = (month, day, weekdayWorkers, holidayWorkers) => {
   printSchedule(month, adjusted);
 };
 
-const generateDailyInfo = (month, day) => {
+export const generateDailyInfo = (month, day) => {
   // month = 5라고 하면은
   const result = [];
   const endDay = MONTH_DAY[month - 1]; // 31
@@ -28,12 +28,12 @@ const generateDailyInfo = (month, day) => {
   }
   return result;
 };
-const isHoliday = (dayName, holidays, day) => {
+export const isHoliday = (dayName, holidays, day) => {
   if (dayName === '토' || dayName === '일') return true;
   if (holidays.includes(day)) return true;
   return false;
 };
-const assignWorkers = (days, weekdayWorkers, holidayWorkers) => {
+export const assignWorkers = (days, weekdayWorkers, holidayWorkers) => {
   //  [{ day: 1, dayName: '월', isHoliday: false, worker:"루루" },
   //  { day: 2, dayName: '월', isHoliday: false, worker:"히히" }];
   let weekdayIndex = 0;
@@ -45,11 +45,11 @@ const assignWorkers = (days, weekdayWorkers, holidayWorkers) => {
     };
   });
 };
-const generateWorker = (workers, index) => {
+export const generateWorker = (workers, index) => {
   return workers[index % workers.length];
 };
 
-const adjustedWorkers = schedule => {
+export const adjustedWorkers = schedule => {
   const result = [...schedule];
   for (let i = 1; i < result.length - 1; i++) {
     if (result[i].worker === result[i - 1].worker) {
