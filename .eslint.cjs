@@ -14,7 +14,6 @@ module.exports = {
     'no-console': 'off',
     quotes: 'off',
     'class-methods-use-this': 'off',
-    'import/extensions': 'off',
     'no-return-await': 'off',
     'import/order': 'off',
     'no-undef': 'off',
