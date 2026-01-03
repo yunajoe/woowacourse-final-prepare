@@ -1,4 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
+import ProductModel from './model/product-model.js';
 import { parseProductFileData } from './utils/parse-data.js';
 import { printProductsData } from './utils/print-data.js';
 import { askProductNameAndCount } from './utils/read-input.js';
@@ -7,14 +8,20 @@ import ProductInputValidate from './validate/product-input-validate.js';
 
 class App {
   async run() {
+    const productModel = new ProductModel();
     Console.print('안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n\n');
-    const parsedData = parseProductFileData();
-    printProductsData(parsedData); // 편의점 재고수량 출력
+    const parsedProductData = parseProductFileData();
+    printProductsData(parsedProductData); // 편의점 재고수량 출력
 
-    retryInput(async () => {
+    const productInput = await retryInput(async () => {
       const input = await askProductNameAndCount();
       ProductInputValidate.validate(input);
+      return input;
     });
+
+    productModel.setProductInput(productInput); // 모델에 저장
+    productModel.calculate();
+    // const parsedPromotionData = parsePromotionFileData();
   }
 }
 
