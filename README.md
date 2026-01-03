@@ -53,3 +53,20 @@
 - else를 지양한다.
   힌트: if 조건절에서 값을 return하는 방식으로 구현하면 else를 사용하지 않아도 된다.
   때로는 if/else, switch문을 사용하는 것이 더 깔끔해 보일 수 있다. 어느 경우에 쓰는 것이 적절할지 스스로 고민해 본다.
+
+# 폴더 구조
+
+📦src
+┣ 📂model
+┃ ┗ 📜worker-model.js
+┣ 📂utils
+┃ ┣ 📜calculate.js
+┃ ┣ 📜parse-data.js
+┃ ┣ 📜read-input.js
+┃ ┗ 📜retry-input.js
+┣ 📂validate
+┃ ┣ 📜input-validate.js
+┃ ┣ 📜work-month-day-input-validate.js
+┃ ┗ 📜worker-list-input-validate.js
+┣ 📜App.js
+┗ 📜index.js
