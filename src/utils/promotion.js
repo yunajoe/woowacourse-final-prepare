@@ -11,7 +11,6 @@ export const findTargetItemAndPromotion = (cartItem, parsedPromotionData, parsed
 
 export const checkPromotion = (cartItem, targetProduct, targetPromotion) => {
   const isPromotionDatePossible = checkPromotionDate(targetPromotion);
-  console.log('isProotionPossbible', isPromotionDatePossible);
 };
 
 // promotion date날짜 확인

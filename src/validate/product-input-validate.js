@@ -18,7 +18,6 @@ class ProductInputValidate {
   }
 
   static #validateProductName(productName, parsedProductData) {
-    // const parsedData = parseProductFileData();
     if (!parsedProductData[productName]) throw new Error('[ERROR] 상품을 찾을 수 없습니다. 다시 입력해 주세요.');
   }
   static #validateNonZeroCount(productCount) {

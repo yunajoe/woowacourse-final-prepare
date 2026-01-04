@@ -12,7 +12,6 @@ class CartModel {
     });
   }
   addItem(productName, productCount) {
-    // 기존에 카트에 있을시 즉, {productName: 사이다, count:2},{productName: 사이다, count:2},
     const existingItem = this.cartItems.find(item => item.productName === productName);
     if (existingItem) {
       existingItem.setProductCount(productCount);

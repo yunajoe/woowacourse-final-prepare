@@ -1,10 +1,11 @@
 import { Console } from '@woowacourse/mission-utils';
 import CartModel from './model/cart-model.js';
 import { finalParseProductInputData, parseProductFileData, parseProductWithPromotionFileData, parsePromotionFileData } from './utils/parse-data.js';
-import { printProductsData } from './utils/print-data.js';
+import { printProductsData, printReceipt } from './utils/print-data.js';
 import { checkPromotion, findTargetItemAndPromotion } from './utils/promotion.js';
-import { askProductNameAndCount } from './utils/read-input.js';
+import { askMemberShipDisCount, askProductNameAndCount } from './utils/read-input.js';
 import { retryInput } from './utils/retry-input.js';
+import MemberShipInputValidate from './validate/membership-input-validate.js';
 import ProductInputValidate from './validate/product-input-validate.js';
 
 class App {
@@ -35,6 +36,11 @@ class App {
       // 프로모션이 없을 때
       if (!targetPromotion) {
         console.log('프로모션이 없어용');
+        retryInput(async () => {
+          const membershipInput = await askMemberShipDisCount();
+          MemberShipInputValidate.validate(membershipInput);
+          printReceipt();
+        });
       }
     }
   }
