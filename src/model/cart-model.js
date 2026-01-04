@@ -4,7 +4,6 @@ class CartModel {
   constructor() {
     this.cartItems = [];
   }
-
   addItemToCart(items) {
     items.forEach(item => {
       const { productName, productCount } = item;

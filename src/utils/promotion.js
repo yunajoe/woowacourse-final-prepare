@@ -1,11 +1,11 @@
 import { getNowDate } from './read-today-date.js';
 
 export const findTargetItemAndPromotion = (cartItem, parsedPromotionData, parsedProductPromotionData) => {
-  const targetProduct = parsedProductPromotionData[cartItem.productName];
-  const targetPromotion = parsedPromotionData[targetProduct.promotion];
+  const productInfo = parsedProductPromotionData[cartItem.productName];
+  const promotionInfo = parsedPromotionData[productInfo.promotion];
   return {
-    targetProduct,
-    targetPromotion,
+    productInfo,
+    promotionInfo,
   };
 };
 
