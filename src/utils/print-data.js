@@ -3,7 +3,7 @@ export const printProductsData = data => {
     values.forEach(value => {
       let line = '';
       const { name, price, count, promotion } = value;
-      line = `- ${name} ${price}원 ${count}개 ${promotion && promotion}`;
+      line = `- ${name} ${price}원 ${count}개 ${Boolean(promotion) ? promotion : ''}`;
       console.log(line);
     });
   }

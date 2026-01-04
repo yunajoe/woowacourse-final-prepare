@@ -7,6 +7,12 @@ export const parseProductFileData = () => {
   return productObject;
 };
 
+export const parseProductWithPromotionFileData = () => {
+  const data = readProductsFile();
+  const rows = removeColumns(data);
+  const object = makeProductWithPromotionObject(rows);
+  return object;
+};
 export const parsePromotionFileData = () => {
   const data = readPromotionFile();
   const rows = removeColumns(data);
@@ -18,6 +24,31 @@ export const parsePromotionFileData = () => {
 const removeColumns = data => {
   const [, ...rows] = data.split('\n');
   return rows.filter(item => item);
+};
+
+const makeProductWithPromotionObject = rows => {
+  const productPromotionObject = {};
+  rows.forEach(row => {
+    const [name, price, count, promotion] = row.split(',').map(item => item.trim());
+    if (!productPromotionObject[name]) {
+      productPromotionObject[name] = {
+        name,
+        price: 0,
+        count: 0,
+        promotionCount: 0,
+        promotion: null,
+      };
+    }
+    const current = productPromotionObject[name];
+    productPromotionObject[name] = {
+      ...current,
+      price: Number(price),
+      count: promotion === 'null' ? current.count + Number(count) : current.count,
+      promotionCount: promotion !== 'null' ? current.promotionCount + Number(count) : current.promotionCount,
+      promotion: promotion !== 'null' ? promotion : current.promotion,
+    };
+  });
+  return productPromotionObject;
 };
 
 // {"콜라":[{name:콜라, price:1000, count:10, promotion:...}, {}], "사이다":[]}
@@ -61,4 +92,14 @@ export const parseProductInputData = input => {
     productName,
     productCount: Number(productCount),
   };
+};
+
+export const finalParseProductInputData = inputs => {
+  return inputs.split(',').map(input => {
+    const [productName, productCount] = input.replace('[', '').replace(']', '').split('-');
+    return {
+      productName,
+      productCount: Number(productCount),
+    };
+  });
 };

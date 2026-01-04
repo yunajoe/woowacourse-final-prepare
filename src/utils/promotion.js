@@ -1,10 +1,25 @@
-import { parseProductFileData, parsePromotionFileData } from './parse-data.js';
+import { getNowDate } from './read-today-date.js';
 
-// 어떠한 프로모션에 속하는지 return하는 함수
-export const returnWhichPromotion = productName => {
-  const parsedProductData = parseProductFileData();
-  const parsedPromotionData = parsePromotionFileData();
-  console.log('ggg', parsedProductData);
-  console.log('ggg2222', productName);
-  // 탄산 2 + 1, 9개 MD 추천 상품.. etc
+export const findTargetItemAndPromotion = (cartItem, parsedPromotionData, parsedProductPromotionData) => {
+  const targetProduct = parsedProductPromotionData[cartItem.productName];
+  const targetPromotion = parsedPromotionData[targetProduct.promotion];
+  return {
+    targetProduct,
+    targetPromotion,
+  };
 };
+
+export const checkPromotion = (cartItem, targetProduct, targetPromotion) => {
+  const isPromotionDatePossible = checkPromotionDate(targetPromotion);
+  console.log('isProotionPossbible', isPromotionDatePossible);
+};
+
+// promotion date날짜 확인
+export const checkPromotionDate = targetPromotion => {
+  const startDate = targetPromotion.startDate; // 2024-01-01
+  const endDate = targetPromotion.endDate; // 2024-12-31
+  const today = getNowDate();
+  return today >= new Date(startDate) && today <= new Date(endDate);
+};
+
+// 수량 확인

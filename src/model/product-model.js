@@ -16,7 +16,7 @@ class ProductModel {
   }
   calculate() {
     const { productName, productCount } = parseProductInputData(this.productInput);
-    const promotionName = returnWhichPromotion(productName);
+    const promotionName = returnWhichPromotion(productName, productCount);
   }
 }
 
