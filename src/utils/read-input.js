@@ -15,3 +15,7 @@ export const askMemberShipDisCount = async () => {
 export const askRePurchaseInput = async () => {
   return await readUserInput('감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)\n');
 };
+
+export const askPromotionFreeItems = async (productName, freeCount) => {
+  return await readUserInput(`현재 ${productName}은(는) ${freeCount}개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)\n`);
+};

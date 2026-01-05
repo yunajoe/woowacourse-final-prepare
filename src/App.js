@@ -4,7 +4,7 @@ import ProductModel from './model/product-model.js';
 import ReceiptModel from './model/receipt-model.js';
 import { finalParseProductInputData, parseProductWithPromotionFileData, parsePromotionFileData } from './utils/parse-data.js';
 import { printProductsData, printReceipt } from './utils/print-data.js';
-import { findTargetItemAndPromotion } from './utils/promotion.js';
+import { checkPromotionDate, findTargetItemAndPromotion } from './utils/promotion.js';
 import { askMemberShipDisCount, askProductNameAndCount, askRePurchaseInput } from './utils/read-input.js';
 import { retryInput } from './utils/retry-input.js';
 import MemberShipInputValidate from './validate/membership-input-validate.js';
@@ -34,7 +34,14 @@ class App {
       // 프로모션이 있을 때
       if (promotionInfo) {
         console.log('프로모션이 있어용 ===>');
-        this.receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
+        // 오늘이 프로모션이 해당 되는지 확인
+        const isPromotionDay = checkPromotionDate(promotionInfo);
+        console.log('isPromotionDay에 해당되나요????', isPromotionDay);
+        if (isPromotionDay) {
+          this.receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
+        } else {
+          this.receiptModel.createNonPromotionItem(productInfo, cartItem);
+        }
       }
       // 프로모션이 없을 때
       if (!promotionInfo) {
@@ -66,6 +73,7 @@ class App {
       RepurchaseInputValidate.validate(repurchaseInput);
       return repurchaseInput.toUpperCase();
     });
+    // NO 라고 하면은 프로그램 종료
     if (repurchaseInput === 'N') return;
 
     // 장바구니 empty한게 만들기

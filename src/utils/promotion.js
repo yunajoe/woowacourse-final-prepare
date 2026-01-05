@@ -9,10 +9,6 @@ export const findTargetItemAndPromotion = (cartItem, parsedPromotionData, parsed
   };
 };
 
-export const checkPromotion = (cartItem, targetProduct, targetPromotion) => {
-  const isPromotionDatePossible = checkPromotionDate(targetPromotion);
-};
-
 // promotion date날짜 확인
 export const checkPromotionDate = targetPromotion => {
   const startDate = targetPromotion.startDate; // 2024-01-01
@@ -20,5 +16,3 @@ export const checkPromotionDate = targetPromotion => {
   const today = getNowDate();
   return today >= new Date(startDate) && today <= new Date(endDate);
 };
-
-// 수량 확인
