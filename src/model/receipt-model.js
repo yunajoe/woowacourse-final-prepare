@@ -29,7 +29,7 @@ class ReceiptModel {
   }
 
   calculateTotalPrice() {
-    this.totalPrice = this.nonPromotionPrice + this.promotionPrice;
+    this.totalPrice = this.nonPromotionPrice + this.promotionPrice + this.promotionDiscount;
   }
   calculateTotalCount() {
     this.totalCount = this.nonPromotionCount + this.promotionCount;
@@ -93,6 +93,7 @@ class ReceiptModel {
       freeCount: freeCount,
     };
     this.promotionPurchasedItems.push(itemObject);
+    this.promotionDiscount = freeCount * productInfo.price;
   }
 
   createNonPromotionItem(productInfo, cartItem) {
