@@ -44,11 +44,6 @@ class ReceiptModel {
 
   createPromotionItem(productInfo, promotionInfo, cartItem) {
     console.log('프로모션 아이템', productInfo, promotionInfo, cartItem);
-    // 오늘이 프로모션 기간에 해당이 되는지?
-
-    // 기간에 해당이 되면은 cartItem의 재고 수량(즉, 사려고 하는 것)이 현재 아이템에 있는지?
-
-    //
   }
 
   createNonPromotionItem(productInfo, cartItem) {
@@ -76,6 +71,22 @@ class ReceiptModel {
 
   // 프로모션 총 합과 , 총 갯수 return
   calculatePromotionItem() {}
+
+  setReset() {
+    this.purchaseItems = []; // {상품명, 수량, 금액}
+    this.nonPromotionPurchasedItems = []; //  { productName: '물', productCount: 3, productPrice: 1500 },
+    this.promotionPurchasedItems = [];
+    this.totalPrice = 0; // 프로모션 + 비프로모션 상품의 총 가격
+    this.totalCount = 0; // 프로모션 + 비프로모션 상품의 총 갯수
+    this.nonPromotionPrice = 0; //  비프로모션 상품의 총 가격
+    this.nonPromotionCount = 0; // /  비프로모션 상품의 총 갯수
+    this.promotionPrice = 0; //  비프로모션 상품의 총 가격
+    this.promotionCount = 0; // /  비프로모션 상품의 총 갯수
+    this.promotionDiscount = 0; // 행사 할인 값
+    this.memberShipInput = 'N';
+    this.membershipDiscount = 0; // 멤버십 할인 값
+    this.payAmount = 0; // 지불해야할 돈
+  }
 }
 
 export default ReceiptModel;

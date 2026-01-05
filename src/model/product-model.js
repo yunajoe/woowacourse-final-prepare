@@ -30,7 +30,7 @@ class ProductModel {
       if (promotionCount > 0) {
         // 프로모션 재고 목록에서 차감
       }
-      console.log('결과아이템', this.currentProducts);
+      // console.log('결과아이템', this.currentProducts);
     });
   }
 }

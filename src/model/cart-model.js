@@ -18,6 +18,9 @@ class CartModel {
     }
     this.cartItems.push(new CartItem(productName, productCount));
   }
+  setCartEmpty() {
+    this.cartItems = [];
+  }
 }
 
 export default CartModel;

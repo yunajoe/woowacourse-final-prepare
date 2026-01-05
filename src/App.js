@@ -18,9 +18,6 @@ class App {
     this.receiptModel = new ReceiptModel();
   }
   async run() {
-    // const cartModel = new CartModel();
-    // const productModel = new ProductModel();
-    // const receiptModel = new ReceiptModel();
     Console.print('안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n\n');
     printProductsData(this.productModel.currentProducts); // 편의점 재고수량 출력
     const productInputs = await retryInput(async () => {
@@ -64,12 +61,16 @@ class App {
       this.receiptModel.membershipDiscount,
       this.receiptModel.payAmount,
     );
-    await retryInput(async () => {
+    const repurchaseInput = await retryInput(async () => {
       const repurchaseInput = await askRePurchaseInput();
       RepurchaseInputValidate.validate(repurchaseInput);
-      if (repurchaseInput.toUpperCase() === 'N') return;
+      return repurchaseInput.toUpperCase();
     });
+    if (repurchaseInput === 'N') return;
 
+    // 장바구니 empty한게 만들기
+    this.cartModel.setCartEmpty();
+    this.receiptModel.setReset();
     // 추가 구매 물어보기
     await retryInput(async () => {
       await this.run();
