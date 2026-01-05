@@ -5,13 +5,13 @@ export const printProductsData = data => {
     values.forEach(value => {
       let line = '';
       const { name, price, count, promotion } = value;
-      line = `- ${name} ${price}원 ${count}개 ${Boolean(promotion) ? promotion : ''}`;
+      line = `- ${name} ${price.toLocaleString()}원 ${count}${count !== '재고 없음' ? '개' : ''} ${Boolean(promotion) ? promotion : ''}`;
       console.log(line);
     });
   }
 };
 
-export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDiscount) => {
+export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDiscount, membershipDiscount, payAmount) => {
   const NAME_WIDTH = 18;
   const COUNT_WIDTH = 6;
   const PRICE_WIDTH = 10;
@@ -27,6 +27,6 @@ export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDi
   Console.print('======================================');
   Console.print(`${'총구매액'.padEnd(NAME_WIDTH + COUNT_WIDTH)}` + `${String(totalCount).padEnd(COUNT_WIDTH)}` + `${totalPrice}`);
   Console.print(`${'행사할인'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${'-' + String(promotionDiscount)}`);
-  Console.print('멤버십 할인');
-  Console.print('내실돈');
+  Console.print(`${'멤버십할인'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${'-' + String(membershipDiscount)}`);
+  Console.print(`${'내실돈'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${String(payAmount)}`);
 };

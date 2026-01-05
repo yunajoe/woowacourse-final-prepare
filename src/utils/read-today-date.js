@@ -1,3 +1,5 @@
+import { MissionUtils } from '@woowacourse/mission-utils';
+
 export const getNowDate = () => {
-  return new Date();
+  return MissionUtils.DateTimes.now();
 };

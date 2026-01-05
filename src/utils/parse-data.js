@@ -4,7 +4,8 @@ export const parseProductFileData = () => {
   const data = readProductsFile();
   const rows = removeColumns(data);
   const productObject = makeProductObject(rows);
-  return productObject;
+  const finalproductObject = makeFinalProductFinalObject(productObject);
+  return finalproductObject;
 };
 
 export const parseProductWithPromotionFileData = () => {
@@ -52,6 +53,24 @@ const makeProductWithPromotionObject = rows => {
 };
 
 // {"콜라":[{name:콜라, price:1000, count:10, promotion:...}, {}], "사이다":[]}
+
+const makeFinalProductFinalObject = productObject => {
+  const copyProductObject = { ...productObject };
+  Object.values(copyProductObject).forEach(item => {
+    if (item.length < 2) {
+      const obj = item[0];
+      if (obj.promotion) {
+        copyProductObject[obj.name].push({
+          ...obj,
+          count: '재고 없음',
+          promotion: false,
+        });
+      }
+    }
+  });
+  return copyProductObject;
+};
+
 const makeProductObject = rows => {
   const productObject = {};
   rows.forEach(row => {

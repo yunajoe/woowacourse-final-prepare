@@ -42,10 +42,11 @@ class App {
     await retryInput(async () => {
       const membershipInput = await askMemberShipDisCount();
       MemberShipInputValidate.validate(membershipInput);
+      receiptModel.memberShipInput = membershipInput;
     });
     // 영수증 출력
     receiptModel.calculateProduct();
-    printReceipt(receiptModel.purchaseItems, receiptModel.totalPrice, receiptModel.totalCount, receiptModel.promotionDiscount);
+    printReceipt(receiptModel.purchaseItems, receiptModel.totalPrice, receiptModel.totalCount, receiptModel.promotionDiscount, receiptModel.membershipDiscount, receiptModel.payAmount);
 
     //
   }
