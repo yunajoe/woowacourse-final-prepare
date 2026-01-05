@@ -29,7 +29,9 @@ export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDi
   Console.print('=============== 증    정 ===============');
   for (const item of purchasedItems) {
     const { productName, freeCount } = item;
-    Console.print(`${productName.padEnd(NAME_WIDTH)}` + `${freeCount}`);
+    if (freeCount) {
+      Console.print(`${productName.padEnd(NAME_WIDTH)}` + `${freeCount}`);
+    }
   }
   Console.print('======================================');
   Console.print(`${'총구매액'.padEnd(NAME_WIDTH + COUNT_WIDTH)}` + `${String(totalCount).padEnd(COUNT_WIDTH)}` + `${totalPrice.toLocaleString()}`);

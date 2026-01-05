@@ -124,7 +124,8 @@ describe('편의점', () => {
   });
 
   test('기간에 해당하지 않는 프로모션 적용', async () => {
-    mockNowDate('2024-02-01');
+    // mockNowDate('2024-02-01');
+    new Date('2024-02-01');
 
     await run({
       inputs: ['[감자칩-2]', 'N', 'N'],

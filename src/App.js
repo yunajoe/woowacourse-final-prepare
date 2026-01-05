@@ -33,10 +33,8 @@ class App {
       const { productInfo, promotionInfo } = findTargetItemAndPromotion(cartItem, parsedPromotionData, parsedProductPromotionData);
       // 프로모션이 있을 때
       if (promotionInfo) {
-        console.log('프로모션이 있어용 ===>');
         // 오늘이 프로모션이 해당 되는지 확인
         const isPromotionDay = checkPromotionDate(promotionInfo);
-        console.log('isPromotionDay에 해당되나요????', isPromotionDay);
         if (isPromotionDay) {
           await this.receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
         } else {
@@ -45,7 +43,6 @@ class App {
       }
       // 프로모션이 없을 때
       if (!promotionInfo) {
-        console.log('프로모션이 없어용 ====>');
         this.receiptModel.createNonPromotionItem(productInfo, cartItem);
       }
     }
