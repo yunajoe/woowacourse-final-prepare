@@ -53,7 +53,7 @@ class ReceiptModel {
 
   createNonPromotionItem(productInfo, cartItem) {
     const price = productInfo.price * cartItem.productCount;
-    const itemObject = { productName: cartItem.productName, productCount: cartItem.productCount, productPrice: price };
+    const itemObject = { productName: cartItem.productName, productCount: cartItem.productCount, productPrice: price, promotionCount: 0 };
     this.nonPromotionPurchasedItems.push(itemObject);
   }
 
