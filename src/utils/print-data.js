@@ -6,7 +6,7 @@ export const printProductsData = data => {
       let line = '';
       const { name, price, count, promotion } = value;
       line = `- ${name} ${price.toLocaleString()}원 ${count}${count !== '재고 없음' ? '개' : ''} ${Boolean(promotion) ? promotion : ''}`;
-      console.log(line);
+      Console.print(line);
     });
   }
 };

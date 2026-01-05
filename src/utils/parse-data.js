@@ -52,8 +52,6 @@ const makeProductWithPromotionObject = rows => {
   return productPromotionObject;
 };
 
-// {"콜라":[{name:콜라, price:1000, count:10, promotion:...}, {}], "사이다":[]}
-
 const makeFinalProductFinalObject = productObject => {
   const copyProductObject = { ...productObject };
   Object.values(copyProductObject).forEach(item => {
