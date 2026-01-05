@@ -42,6 +42,15 @@ class ReceiptModel {
     }
   }
 
+  createPromotionItem(productInfo, promotionInfo, cartItem) {
+    console.log('프로모션 아이템', productInfo, promotionInfo, cartItem);
+    // 오늘이 프로모션 기간에 해당이 되는지?
+
+    // 기간에 해당이 되면은 cartItem의 재고 수량(즉, 사려고 하는 것)이 현재 아이템에 있는지?
+
+    //
+  }
+
   createNonPromotionItem(productInfo, cartItem) {
     const price = productInfo.price * cartItem.productCount;
     const itemObject = { productName: cartItem.productName, productCount: cartItem.productCount, productPrice: price };
@@ -50,7 +59,6 @@ class ReceiptModel {
 
   // 비 프로모션의 총 합과, 총 갯수 return
   calculateNonPromotionItem() {
-    console.log('우?', this.nonPromotionPurchasedItems);
     const result = this.nonPromotionPurchasedItems.reduce(
       (acc, { productCount, productPrice }) => {
         acc['totalCount'] += productCount;

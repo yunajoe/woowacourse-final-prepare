@@ -11,3 +11,7 @@ export const askProductNameAndCount = async () => {
 export const askMemberShipDisCount = async () => {
   return await readUserInput('멤버십 할인을 받으시겠습니까? (Y/N)\n');
 };
+
+export const askRePurchaseInput = async () => {
+  return await readUserInput('감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)\n');
+};

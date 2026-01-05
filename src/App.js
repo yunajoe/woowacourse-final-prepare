@@ -5,10 +5,11 @@ import ReceiptModel from './model/receipt-model.js';
 import { finalParseProductInputData, parseProductWithPromotionFileData, parsePromotionFileData } from './utils/parse-data.js';
 import { printProductsData, printReceipt } from './utils/print-data.js';
 import { findTargetItemAndPromotion } from './utils/promotion.js';
-import { askMemberShipDisCount, askProductNameAndCount } from './utils/read-input.js';
+import { askMemberShipDisCount, askProductNameAndCount, askRePurchaseInput } from './utils/read-input.js';
 import { retryInput } from './utils/retry-input.js';
 import MemberShipInputValidate from './validate/membership-input-validate.js';
 import ProductInputValidate from './validate/product-input-validate.js';
+import RepurchaseInputValidate from './validate/repurchase-input-validate.js';
 
 class App {
   async run() {
@@ -31,6 +32,7 @@ class App {
       // 프로모션이 있을 때
       if (promotionInfo) {
         console.log('프로모션이 있어용 ===>');
+        receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
       }
       // 프로모션이 없을 때
       if (!promotionInfo) {
@@ -47,8 +49,14 @@ class App {
     // 영수증 출력
     receiptModel.calculateProduct();
     printReceipt(receiptModel.purchaseItems, receiptModel.totalPrice, receiptModel.totalCount, receiptModel.promotionDiscount, receiptModel.membershipDiscount, receiptModel.payAmount);
-
-    //
+    await retryInput(async () => {
+      const repurchaseInput = await askRePurchaseInput();
+      RepurchaseInputValidate.validate(repurchaseInput);
+      if (repurchaseInput.toUpperCase() === 'N') return;
+    });
+    await retryInput(async () => {
+      await this.run();
+    });
   }
 }
 export default App;
