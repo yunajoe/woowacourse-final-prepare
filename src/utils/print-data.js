@@ -12,6 +12,7 @@ export const printProductsData = data => {
 };
 
 export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDiscount, membershipDiscount, payAmount) => {
+  console.log('purchasedItem ===>', purchasedItems);
   const NAME_WIDTH = 18;
   const COUNT_WIDTH = 6;
   const PRICE_WIDTH = 10;
@@ -20,10 +21,16 @@ export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDi
   Console.print('============== W 편의점 ==============');
   Console.print(`${'상품명'.padEnd(NAME_WIDTH)}` + `${'수량'.padStart(COUNT_WIDTH)}` + `${'금액'.padStart(PRICE_WIDTH)}`);
   for (const item of purchasedItems) {
-    const { productName, productCount, productPrice } = item;
-    Console.print(`${productName.padEnd(NAME_WIDTH)}` + `${String(productCount).padStart(COUNT_WIDTH)}` + `${productPrice.toLocaleString().padStart(PRICE_WIDTH)}`);
+    const { productName, productCount, productPrice, promotionCount } = item;
+    Console.print(
+      `${productName.padEnd(NAME_WIDTH)}` + `${String(productCount + promotionCount).padStart(COUNT_WIDTH)}` + `${(productPrice + promotionDiscount).toLocaleString().padStart(PRICE_WIDTH)}`,
+    );
   }
   Console.print('=============== 증    정 ===============');
+  for (const item of purchasedItems) {
+    const { productName, freeCount } = item;
+    Console.print(`${productName.padEnd(NAME_WIDTH)}` + `${freeCount}`);
+  }
   Console.print('======================================');
   Console.print(`${'총구매액'.padEnd(NAME_WIDTH + COUNT_WIDTH)}` + `${String(totalCount).padEnd(COUNT_WIDTH)}` + `${totalPrice.toLocaleString()}`);
   Console.print(`${'행사할인'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${'-' + String(promotionDiscount)}`);

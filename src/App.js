@@ -38,7 +38,7 @@ class App {
         const isPromotionDay = checkPromotionDate(promotionInfo);
         console.log('isPromotionDay에 해당되나요????', isPromotionDay);
         if (isPromotionDay) {
-          this.receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
+          await this.receiptModel.createPromotionItem(productInfo, promotionInfo, cartItem);
         } else {
           this.receiptModel.createNonPromotionItem(productInfo, cartItem);
         }
@@ -56,10 +56,10 @@ class App {
       MemberShipInputValidate.validate(membershipInput);
       this.receiptModel.memberShipInput = membershipInput;
     });
-    // 영수증 출력
     this.receiptModel.calculateProduct();
-    // product 재고에서 구매한 상품 차감
+    // product 재고에서 구매한 상품 차감치
     this.productModel.deductCartProduct(this.receiptModel.purchaseItems);
+    // 영수증 출력
     printReceipt(
       this.receiptModel.purchaseItems,
       this.receiptModel.totalPrice,

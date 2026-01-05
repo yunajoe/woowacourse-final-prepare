@@ -1,6 +1,10 @@
+import { askPromotionFreeItems, askPromotionItemNotApplicable } from '../utils/read-input.js';
+import { retryInput } from '../utils/retry-input.js';
+import RepurchaseInputValidate from '../validate/repurchase-input-validate.js';
+
 class ReceiptModel {
   constructor() {
-    this.purchaseItems = []; // {상품명, 수량, 금액}
+    this.purchaseItems = []; //
     this.nonPromotionPurchasedItems = []; //  { productName: '물', productCount: 3, productPrice: 1500 },
     this.promotionPurchasedItems = [];
     this.totalPrice = 0; // 프로모션 + 비프로모션 상품의 총 가격
@@ -25,7 +29,6 @@ class ReceiptModel {
   }
 
   calculateTotalPrice() {
-    console.log('총 가격을 계산해유 ----->', this.nonPromotionPrice + this.promotionPrice);
     this.totalPrice = this.nonPromotionPrice + this.promotionPrice;
   }
   calculateTotalCount() {
@@ -44,49 +47,54 @@ class ReceiptModel {
   }
 
   async createPromotionItem(productInfo, promotionInfo, cartItem) {
-    // console.log('프로모션 아이템', productInfo, promotionInfo, cartItem);
+    console.log('프로모션 아이템', productInfo, promotionInfo, cartItem);
+    let freeCount = 0; // 무료 증정 제품 갯수
+    let promotionCount = 0; // 재고중 프로모션 중에서 차가
+
     const { buy, get } = promotionInfo;
     const requestCount = cartItem.productCount;
     const totalPrice = productInfo.price * requestCount;
     const promotionUnit = buy + get;
-    let freeCount = 0; // 무료 증정 제품 갯수
-    let promotionCount = 0;
-    const divideValue = requestCount % promotionUnit;
+    const remainder = requestCount % promotionUnit;
+
     if (requestCount < buy) {
-      console.log('요청한것이 최소 요구 사항보다 작다', requestCount);
+      console.log('요청한것이 최소 요구 사항보다 작다');
       promotionCount = requestCount;
-    } else if (divideValue === 0) {
+    } else if (remainder === 0) {
       console.log('요청한것이 딱 떨어진당!');
-      // promotionCount = requestCount / promotionUnit;
-    } else if (divideValue !== 0) {
+      promotionCount = requestCount;
+      freeCount = requestCount / promotionUnit;
+    } else if (remainder !== 0) {
       console.log('요청한것이 딱 떨어지지 않는당!');
-      // const quote = Math.floor(requestCount / promotionUnit);
-      // const residual = requestCount - quote * unit;
-      // if (residual === buy) {
-      //   const response = await retryInput(async () => {
-      //     const input = await askPromotionFreeItems();
-      //     RepurchaseInputValidate.validate(input);
-      //     return input.toUpperCase();
-      //   });
-      //   if (response === 'Y') {
-      //     promotionCount = quote + get;
-      //   } else {
-      //     promotionCount = quote;
-      //   }
-      // } else if (residual < buy) {
-      //   Console.print(`현재 콜라 ${get}개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N))`);
-      //   if (응답 === yes) {
-      //     promotion = quote;
-      //     count;
-      //   } else {
-      //   }
-      // }
+      const quote = Math.floor(requestCount / promotionUnit);
+      const value = requestCount - quote * promotionUnit;
+      if (value === buy) {
+        const response = await retryInput(async () => {
+          const input = await askPromotionFreeItems(productInfo.name, promotionUnit - value);
+          RepurchaseInputValidate.validate(input);
+          return input.toUpperCase();
+        });
+        freeCount = response === 'Y' ? promotionUnit - value : 0;
+        promotionCount = requestCount + freeCount;
+      } else if (value < buy) {
+        const response = await retryInput(async () => {
+          const input = await askPromotionItemNotApplicable(productInfo.name, value);
+          RepurchaseInputValidate.validate(input);
+          return input.toUpperCase();
+        });
+      }
     }
-    const itemObject = { productName: cartItem.productName, productCount: cartItem.productCount - promotionCount, productPrice: totalPrice, promotionCount: promotionCount };
+
+    const itemObject = {
+      productName: cartItem.productName,
+      productCount: cartItem.productCount + freeCount - promotionCount,
+      productPrice: totalPrice,
+      promotionCount: promotionCount,
+      freeCount: freeCount,
+    };
     this.promotionPurchasedItems.push(itemObject);
   }
 
-  // [{productName:물, productCount: 4, productPrice: }]
   createNonPromotionItem(productInfo, cartItem) {
     const price = productInfo.price * cartItem.productCount;
     const itemObject = { productName: cartItem.productName, productCount: cartItem.productCount, productPrice: price, promotionCount: 0 };
