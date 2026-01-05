@@ -31,12 +31,11 @@ class App {
       // 프로모션이 있을 때
       if (promotionInfo) {
         console.log('프로모션이 있어용 ===>');
-        // checkPromotion(cartItem, targetProduct, targetPromotion);
       }
       // 프로모션이 없을 때
       if (!promotionInfo) {
         console.log('프로모션이 없어용 ====>');
-        receiptModel.calculateNonPromotionItem(productInfo, cartItem);
+        receiptModel.createNonPromotionItem(productInfo, cartItem);
       }
     }
 
@@ -44,11 +43,11 @@ class App {
       const membershipInput = await askMemberShipDisCount();
       MemberShipInputValidate.validate(membershipInput);
     });
-
     // 영수증 출력
-    receiptModel.calculateTotalPrice();
-    printReceipt(receiptModel.purchaseItems, receiptModel.totalPrice);
+    receiptModel.calculateProduct();
+    printReceipt(receiptModel.purchaseItems, receiptModel.totalPrice, receiptModel.totalCount, receiptModel.promotionDiscount);
+
+    //
   }
 }
-
 export default App;
