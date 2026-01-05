@@ -50,10 +50,11 @@ class ReceiptModel {
 
   // 비 프로모션의 총 합과, 총 갯수 return
   calculateNonPromotionItem() {
+    console.log('우?', this.nonPromotionPurchasedItems);
     const result = this.nonPromotionPurchasedItems.reduce(
       (acc, { productCount, productPrice }) => {
         acc['totalCount'] += productCount;
-        acc['totalPrice'] += productPrice * productCount;
+        acc['totalPrice'] += productPrice;
         return acc;
       },
       {

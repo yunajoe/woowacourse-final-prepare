@@ -25,8 +25,8 @@ export const printReceipt = (purchasedItems, totalPrice, totalCount, promotionDi
   }
   Console.print('=============== 증    정 ===============');
   Console.print('======================================');
-  Console.print(`${'총구매액'.padEnd(NAME_WIDTH + COUNT_WIDTH)}` + `${String(totalCount).padEnd(COUNT_WIDTH)}` + `${totalPrice}`);
+  Console.print(`${'총구매액'.padEnd(NAME_WIDTH + COUNT_WIDTH)}` + `${String(totalCount).padEnd(COUNT_WIDTH)}` + `${totalPrice.toLocaleString()}`);
   Console.print(`${'행사할인'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${'-' + String(promotionDiscount)}`);
   Console.print(`${'멤버십할인'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${'-' + String(membershipDiscount)}`);
-  Console.print(`${'내실돈'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${String(payAmount)}`);
+  Console.print(`${'내실돈'.padEnd(NAME_WIDTH + COUNT_WIDTH + PADDING_WIDTH)}` + `${payAmount.toLocaleString()}`);
 };
