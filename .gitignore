@@ -11,11 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-package.json
-package-lock.json
-.eslint.config.js
-.prettierrc
-
 
 # Editor directories and files
 .vscode/*
