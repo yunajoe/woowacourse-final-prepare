@@ -27,8 +27,12 @@ class App {
     });
     OutputView.printEventIntro(date);
 
-    const menuModel = new MenuModel(menus);
-    menuModel.printMenuList();
+    const menuModel = new MenuModel(day, date, menus);
+    menuModel.printMenuList(); // 주문 메뉴 list
+    menuModel.printCalculateBeforeDiscountTotalPrice(); // 할인전 총 주문 메뉴 list
+    menuModel.printFreeMenuList(); // <증정 메뉴> list
+    menuModel.printEventList(); // 혜태 내역 리스트
+    menuModel.printTotalEventPrice(); // 총 혜탱 금액
   }
 }
 

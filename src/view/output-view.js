@@ -13,6 +13,32 @@ const OutputView = {
       const { menu, count } = item;
       Console.print(`${menu} ${count}개`);
     });
+    Console.print('\n');
+  },
+  printBeforeDiscountTotalPrice(totalPrice) {
+    Console.print('<할인 전 총주문 금액>');
+    Console.print(totalPrice.toLocaleString());
+    Console.print('\n');
+  },
+  printFreeItem(freeItem) {
+    Console.print('<증정 메뉴>');
+    Console.print(`${freeItem ? freeItem : '없음'}`);
+    Console.print('\n');
+  },
+  printEvent(result) {
+    Console.print('<혜택 내역>');
+    if (!result) {
+      Console.print('없음');
+    } else {
+      const { christmasDdayEvent, normalDayEvent, holiDayEvent, specialDayEvent, freeEvent } = result;
+      Console.print(`크리스마스 디데이 할인: -${christmasDdayEvent.toLocaleString()}원`);
+      normalDayEvent && Console.print(`평일 할인: -${normalDayEvent}`);
+      holiDayEvent && Console.print(`주말 할인: -${holiDayEvent.toLocaleString()}원`);
+      Console.print(`특별 할인: -${specialDayEvent.toLocaleString()}원`);
+      Console.print(`증정 이벤트: -${freeEvent.toLocaleString()}원`);
+    }
+
+    Console.print('\n');
   },
 };
 
