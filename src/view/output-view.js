@@ -32,7 +32,7 @@ const OutputView = {
     } else {
       const { christmasDdayEvent, normalDayEvent, holiDayEvent, specialDayEvent, freeEvent } = result;
       Console.print(`크리스마스 디데이 할인: -${christmasDdayEvent.toLocaleString()}원`);
-      normalDayEvent && Console.print(`평일 할인: -${normalDayEvent}`);
+      normalDayEvent && Console.print(`평일 할인: -${normalDayEvent.toLocaleString()}`);
       holiDayEvent && Console.print(`주말 할인: -${holiDayEvent.toLocaleString()}원`);
       Console.print(`특별 할인: -${specialDayEvent.toLocaleString()}원`);
       Console.print(`증정 이벤트: -${freeEvent.toLocaleString()}원`);

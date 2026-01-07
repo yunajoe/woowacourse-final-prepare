@@ -33,6 +33,8 @@ class App {
     menuModel.printFreeMenuList(); // <증정 메뉴> list
     menuModel.printEventList(); // 혜태 내역 리스트
     menuModel.printTotalEventPrice(); // 총 혜탱 금액
+    menuModel.printCalculateAfterDiscountTotalPrice(); // 할인 후 금액
+    menuModel.printEventBadge(); // 총 이벤트 배지
   }
 }
 
