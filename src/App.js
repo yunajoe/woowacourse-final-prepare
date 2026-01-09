@@ -12,7 +12,7 @@ class App {
       const parseData = parseFileData(fileData);
       model.parsedData = parseData;
 
-      OutputView.printToday();
+      OutputView.printToday(model);
       OutputView.printIntro();
 
       const selectedNum = await Console.readLineAsync('');

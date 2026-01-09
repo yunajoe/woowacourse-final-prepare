@@ -10,5 +10,9 @@ const InputView = {
     const input = await Console.readLineAsync(InputMessage.nickname);
     return input.trim();
   },
+  async readAttendanceTime() {
+    const input = await Console.readLineAsync(InputMessage.attendanceTime);
+    return input.trim();
+  },
 };
 export default InputView;
