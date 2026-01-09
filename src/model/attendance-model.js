@@ -33,7 +33,6 @@ class AttendanceModel {
 
     const formattedToday = parsePushDate(this.today);
     const formattedTodayTime = parsePushTime(this.attendanceTime);
-
     const { name, data } = filterData(this.parsedData, item => item.name === nickname)[0];
     data.push({
       attendanceDate: formattedToday,
@@ -42,6 +41,8 @@ class AttendanceModel {
 
     OutputView.printAttendance(this.today, this.attendanceTime);
   }
+
+  async getSelectedNumberTwo() {}
 }
 
 export default AttendanceModel;

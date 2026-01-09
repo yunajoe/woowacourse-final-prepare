@@ -19,7 +19,7 @@ const OutputView = {
   printAttendance(today, time) {
     const { month, date, day } = today;
     const formattedTodayTime = parsePushTime(time);
-    Console.print(`${month}월 ${date}일 ${day}요일 ${formattedTodayTime} (출석)`);
+    Console.print(`${month}월 ${date}일 ${day}요일 ${formattedTodayTime} (출석)\n`);
   },
 };
 export default OutputView;

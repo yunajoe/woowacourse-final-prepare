@@ -5,21 +5,27 @@ import AttendanceModel from './model/attendance-model.js';
 import OutputView from './view/output-view.js';
 
 class App {
+  constructor() {
+    this.model = new AttendanceModel();
+    const fileData = readFile('public/attendance.csv');
+    const parseData = parseFileData(fileData);
+    this.model.parsedData = parseData;
+  }
   async run() {
     try {
-      const model = new AttendanceModel();
-      const fileData = readFile('public/attendance.csv');
-      const parseData = parseFileData(fileData);
-      model.parsedData = parseData;
-
-      OutputView.printToday(model);
+      OutputView.printToday(this.model);
       OutputView.printIntro();
 
       const selectedNum = await Console.readLineAsync('');
-      Console.print('\n');
-      // 1번을 선택 하였을떄
+      // 1번(출석 확인) 하였을떄
       if (Number(selectedNum) === 1) {
-        await model.getSelectedNumberOne();
+        await this.model.getSelectedNumberOne();
+        await this.run();
+      } else if (Number(selectedNum) === 2) {
+        await this.model.getSelectedNumberTwo();
+        await this.run();
+      } else if (selectedNum === 'Q') {
+        return;
       }
     } catch (error) {
       throw error;
